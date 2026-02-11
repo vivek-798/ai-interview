@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "skill": "python",
+    "difficulty": "easy",
+    "question": "What is a list in Python?",
+    "keywords": ["mutable", "ordered", "collection"]
+  },
+  {
+    "id": 2,
+    "skill": "python",
+    "difficulty": "easy",
+    "question": "What is a tuple?",
+    "keywords": ["immutable", "ordered"]
+  },
+  {
+    "id": 3,
+    "skill": "data structures",
+    "difficulty": "medium",
+    "question": "What is a stack and where is it used?",
+    "keywords": ["lifo", "push", "pop"]
+  },
+  {
+    "id": 4,
+    "skill": "python",
+    "difficulty": "medium",
+    "question": "Explain list vs tuple.",
+    "keywords": ["mutable", "immutable", "performance"]
+  }
+]

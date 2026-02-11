@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "question": "Tell me about yourself.",
+    "keywords": ["experience", "skills", "projects"]
+  },
+  {
+    "id": 2,
+    "question": "What is your biggest strength?",
+    "keywords": ["problem", "learning", "team"]
+  },
+  {
+    "id": 3,
+    "question": "Why should we hire you?",
+    "keywords": ["skills", "value", "company"]
+  }
+]

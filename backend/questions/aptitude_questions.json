@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "question": "If 5 workers can complete a job in 10 days, how many days will 10 workers take?",
+    "options": ["5 days", "10 days", "20 days", "15 days"],
+    "answer": "5 days"
+  },
+  {
+    "id": 2,
+    "question": "What comes next in the series: 2, 4, 8, 16, ?",
+    "options": ["18", "24", "32", "30"],
+    "answer": "32"
+  },
+  {
+    "id": 3,
+    "question": "A train 100m long crosses a pole in 10 seconds. What is its speed?",
+    "options": ["10 m/s", "15 m/s", "20 m/s", "25 m/s"],
+    "answer": "10 m/s"
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "question": "Write a function to reverse a string.",
+    "function_name": "reverse_string",
+    "test_cases": [
+      {"input": "hello", "output": "olleh"},
+      {"input": "python", "output": "nohtyp"}
+    ]
+  },
+  {
+    "id": 2,
+    "question": "Write a function to check if a number is prime.",
+    "function_name": "is_prime",
+    "test_cases": [
+      {"input": 5, "output": true},
+      {"input": 4, "output": false}
+    ]
+  }
+]
