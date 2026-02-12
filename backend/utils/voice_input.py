@@ -2,6 +2,7 @@ import os
 os.environ["PATH"] += os.pathsep + r"C:\ffmpeg\bin"
 import sounddevice as sd
 import numpy as np
+import threading
 import whisper
 import tempfile
 import scipy.io.wavfile as wav
@@ -10,6 +11,10 @@ import scipy.io.wavfile as wav
 model = whisper.load_model("base")
 
 def listen_and_transcribe():
+    # Set default device (optional, but helps if you have multiple audio devices)
+    # You might need to change the device number. Run python -m sounddevice to list devices
+    # sd.default.device = 1
+
     print("🎙️ Recording... Press ENTER to stop.")
 
     samplerate = 16000
@@ -24,20 +29,29 @@ def listen_and_transcribe():
     thread = threading.Thread(target=stop_recording)
     thread.start()
 
-    with sd.InputStream(samplerate=samplerate, channels=1) as stream:
-        while is_recording:
-            audio_chunk, _ = stream.read(1024)
-            recording.append(audio_chunk)
+    try:
+        with sd.InputStream(samplerate=samplerate, channels=1) as stream:
+            while is_recording:
+                audio_chunk, _ = stream.read(1024)
+                recording.append(audio_chunk)
 
-    audio_data = np.concatenate(recording)
+        audio_data = np.concatenate(recording)
 
-    with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp:
-        wav.write(tmp.name, samplerate, audio_data)
-        result = model.transcribe(tmp.name)
+        with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp:
+            wav.write(tmp.name, samplerate, audio_data)
+            try:
+                result = model.transcribe(tmp.name)
+                text = result["text"].strip()
+            except Exception as e:
+                print(f"Transcription error: {e}")
+                text = "[Transcription failed]"
 
-    text = result["text"].strip()
+    except Exception as e:
+        print(f"Recording error: {e}")
+        return "[No audio recorded]"
 
     if text == "":
+        print("No speech detected")
         return "[No speech detected]"
 
     return text
@@ -69,4 +83,3 @@ def conduct_voice_technical_round(questions):
         answers[q["id"]] = combined_answer
 
     return answers
-
