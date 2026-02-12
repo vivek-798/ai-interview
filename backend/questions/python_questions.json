@@ -4,27 +4,20 @@
     "skill": "python",
     "difficulty": "easy",
     "question": "What is a list in Python?",
-    "keywords": ["mutable", "ordered", "collection"]
+    "expected_answer": "A list is a mutable ordered collection of elements."
   },
   {
     "id": 2,
     "skill": "python",
-    "difficulty": "easy",
-    "question": "What is a tuple?",
-    "keywords": ["immutable", "ordered"]
+    "difficulty": "medium",
+    "question": "Explain list vs tuple.",
+    "expected_answer": "A list is mutable while a tuple is immutable. Tuples are faster and use less memory."
   },
   {
     "id": 3,
     "skill": "data structures",
-    "difficulty": "medium",
-    "question": "What is a stack and where is it used?",
-    "keywords": ["lifo", "push", "pop"]
-  },
-  {
-    "id": 4,
-    "skill": "python",
-    "difficulty": "medium",
-    "question": "Explain list vs tuple.",
-    "keywords": ["mutable", "immutable", "performance"]
+    "difficulty": "easy",
+    "question": "What is a stack?",
+    "expected_answer": "A stack is a data structure that follows Last In First Out principle."
   }
 ]

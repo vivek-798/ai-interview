@@ -2,16 +2,16 @@
   {
     "id": 1,
     "question": "Tell me about yourself.",
-    "keywords": ["experience", "skills", "projects"]
+    "expected_answer": "The candidate should talk about their background, skills, experience, and projects."
   },
   {
     "id": 2,
     "question": "What is your biggest strength?",
-    "keywords": ["problem", "learning", "team"]
+    "expected_answer": "The candidate should explain a strong professional trait such as problem solving, teamwork, or learning ability."
   },
   {
     "id": 3,
     "question": "Why should we hire you?",
-    "keywords": ["skills", "value", "company"]
+    "expected_answer": "The candidate should explain how their skills and value align with the company goals."
   }
 ]

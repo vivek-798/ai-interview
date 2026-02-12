@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "question": "Write a function to reverse a string.",
+    "question": "Write a function reverse_string(s) that returns the reversed string.",
     "function_name": "reverse_string",
     "test_cases": [
       {"input": "hello", "output": "olleh"},
@@ -10,11 +10,11 @@
   },
   {
     "id": 2,
-    "question": "Write a function to check if a number is prime.",
-    "function_name": "is_prime",
+    "question": "Write a function is_even(n) that returns True if number is even.",
+    "function_name": "is_even",
     "test_cases": [
-      {"input": 5, "output": true},
-      {"input": 4, "output": false}
+      {"input": 4, "output": true},
+      {"input": 5, "output": false}
     ]
   }
 ]

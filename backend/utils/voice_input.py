@@ -1,50 +1,72 @@
-import whisper
+import os
+os.environ["PATH"] += os.pathsep + r"C:\ffmpeg\bin"
 import sounddevice as sd
 import numpy as np
+import whisper
+import tempfile
+import scipy.io.wavfile as wav
 
-MODEL_NAME = "base"
-SAMPLE_RATE = 16000
-DURATION = 8  # ⬅️ increased duration (important)
 
+model = whisper.load_model("base")
 
 def listen_and_transcribe():
-    print("🎙️ Recording... Speak clearly and continuously")
+    print("🎙️ Recording... Press ENTER to stop.")
 
-    # Record audio
-    audio = sd.rec(
-        int(DURATION * SAMPLE_RATE),
-        samplerate=SAMPLE_RATE,
-        channels=1,
-        dtype=np.float32
-    )
-    sd.wait()
+    samplerate = 16000
+    recording = []
+    is_recording = True
 
-    # Convert to 1D
-    audio = audio.flatten()
+    def stop_recording():
+        nonlocal is_recording
+        input()  # wait for Enter key
+        is_recording = False
 
-    # 🔥 NORMALIZE AUDIO (CRITICAL FIX)
-    max_val = np.max(np.abs(audio))
-    if max_val > 0:
-        audio = audio / max_val
+    thread = threading.Thread(target=stop_recording)
+    thread.start()
 
-    # Load model once (cache-friendly)
-    model = whisper.load_model(MODEL_NAME)
+    with sd.InputStream(samplerate=samplerate, channels=1) as stream:
+        while is_recording:
+            audio_chunk, _ = stream.read(1024)
+            recording.append(audio_chunk)
 
-    # 🔥 FORCE LANGUAGE + DISABLE SILENCE FILTERING
-    result = model.transcribe(
-        audio,
-        language="en",
-        fp16=False,
-        temperature=0,
-        no_speech_threshold=0.1,
-        logprob_threshold=-1.0,
-        condition_on_previous_text=False
-    )
+    audio_data = np.concatenate(recording)
 
-    text = result.get("text", "").strip()
+    with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp:
+        wav.write(tmp.name, samplerate, audio_data)
+        result = model.transcribe(tmp.name)
 
-    # Debug fallback
-    if not text:
-        return "[No speech detected – please speak louder and continuously]"
+    text = result["text"].strip()
+
+    if text == "":
+        return "[No speech detected]"
 
     return text
+
+def conduct_voice_technical_round(questions):
+    print("\n=== Technical Round ===")
+
+    answers = {}
+
+    for q in questions:
+
+        print("\n🤖 AI:", q["question"])
+        speak(q["question"])
+
+        print("🎙️ Your answer:")
+        user_answer = listen_and_transcribe()
+        print("📝 You:", user_answer)
+
+        # 🔥 Follow-up Question
+        follow_up = "Can you give me a real-world example?"
+        print("\n🤖 AI:", follow_up)
+        speak(follow_up)
+
+        example_answer = listen_and_transcribe()
+        print("📝 You:", example_answer)
+
+        # Combine both answers
+        combined_answer = user_answer + " " + example_answer
+        answers[q["id"]] = combined_answer
+
+    return answers
+
